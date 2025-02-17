@@ -3334,7 +3334,7 @@ service_discovery_impl::last_offer_shorter_half_offer_delay_ago() {
 
 bool
 service_discovery_impl::check_source_address(
-        const boost::asio::ip::address &its_source_address) const {
+        const boost::asio::ip::address &) const {
 
    bool is_valid = true;
    // Check if source address is same as nodes unicast address
@@ -3958,44 +3958,4 @@ reliability_type_e service_discovery_impl::get_eventgroup_reliability(
             // and update reliability type of eventgroup
             its_reliability = get_remote_offer_type(_service, _instance);
             VSOMEIP_WARNING << "sd::" << __func__ << ": couldn't determine eventgroup reliability type for ["
-                        << std::hex << std::setfill('0')
-                        << std::setw(4) << _service << "."
-                        << std::setw(4) << _instance << "."
-                        << std::setw(4) << _eventgroup << "]"
-                        << " using reliability type:  "
-                        << std::setw(4) << static_cast<uint16_t>(its_reliability);
-            its_info->set_reliability(its_reliability);
-        }
-    } else {
-        VSOMEIP_WARNING << "sd::" << __func__ << ": couldn't lock eventgroupinfo ["
-                << std::hex << std::setfill('0')
-                << std::setw(4) << _service << "."
-                << std::setw(4) << _instance << "."
-                << std::setw(4) << _eventgroup << "] ";
-        auto its_eg_info = host_->find_eventgroup(_service, _instance, _eventgroup);
-        if (its_eg_info) {
-            _subscription->set_eventgroupinfo(its_eg_info);
-            its_reliability = its_eg_info->get_reliability();
-        }
-    }
-
-    if (its_reliability == reliability_type_e::RT_UNKNOWN) {
-        VSOMEIP_WARNING << "sd::" << __func__ << ": eventgroup reliability type is unknown ["
-                    << std::hex << std::setfill('0')
-                    << std::setw(4) << _service << "."
-                    << std::setw(4) << _instance << "."
-                    << std::setw(4) << _eventgroup << "]";
-    }
-    return its_reliability;
-}
-
-void service_discovery_impl::deserialize_data(const byte_t* _data, const length_t& _size,
-                                              std::shared_ptr<message_impl>& _message) {
-    std::lock_guard its_lock(deserialize_mutex_);
-    deserializer_->set_data(_data, _size);
-    _message = std::shared_ptr<message_impl>(deserializer_->deserialize_sd_message());
-    deserializer_->reset();
-}
-
-}  // namespace sd
-}  // namespace vsomeip_v3
+                 
