@@ -3338,11 +3338,11 @@ service_discovery_impl::check_source_address(
 
    bool is_valid = true;
    // Check if source address is same as nodes unicast address
-   if (unicast_ == its_source_address) {
-       VSOMEIP_ERROR << "Source address of message is same as DUT's unicast address! : "
-               << its_source_address.to_string();
-       is_valid = false;
-   }
+//    if (unicast_ == its_source_address) {
+//        VSOMEIP_ERROR << "Source address of message is same as DUT's unicast address! : "
+//                << its_source_address.to_string();
+//        is_valid = false;
+//    }
    return is_valid;
 }
 
