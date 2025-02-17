@@ -1503,7 +1503,7 @@ void routing_manager_impl::on_message(const byte_t *_data, length_t _size,
         if (its_service == VSOMEIP_SD_SERVICE) {
             its_method = bithelper::read_uint16_be(&_data[VSOMEIP_METHOD_POS_MIN]);
             if (discovery_ && its_method == sd::method) {
-                if (configuration_->get_sd_port() == _remote_port) {
+                // if (configuration_->get_sd_port() == _remote_port) {
                     if (!_remote_address.is_unspecified()) {
                         // ACL check SD message
                         if(!is_acl_message_allowed(_receiver, its_service, ANY_INSTANCE, _remote_address)) {
@@ -1513,10 +1513,10 @@ void routing_manager_impl::on_message(const byte_t *_data, length_t _size,
                     } else {
                         VSOMEIP_ERROR << "Ignored SD message from unknown address.";
                     }
-                } else {
-                    VSOMEIP_ERROR << "Ignored SD message from unknown port ("
-                            << _remote_port << ")";
-                }
+                // } else {
+                //     VSOMEIP_ERROR << "Ignored SD message from unknown port ("
+                //             << _remote_port << ")";
+                // }
             }
         } else {
             if (_is_multicast) {
